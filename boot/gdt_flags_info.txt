@@ -1,0 +1,20 @@
+Access Flags for Code Segment -
+
+; ACCESS FLAGS ->
+                ; Present = 1 (YES) ; Ring = 00 (System) ; DT = 1 (CODE/DATA) 
+                ; Type -> Executable = 1 (CODE) ; Conforming = 0 ; RW = 1 (RW) ; ACESS = 0 (DEFAULT)
+
+
+Access Flags for Data Segment -
+
+; ACCESS FLAGS ->
+                ; Present = 1 (YES) ; Ring = 00 (System) ; DT = 1 (CODE/DATA) 
+                ; Type -> Executable = 0 (CODE) ; Conforming = 0 ; RW = 1 (RW) ; ACESS = 0 (DEFAULT)
+
+
+
+Granularity Flags -
+
+; GRANULAR FLAGS -> 
+                ; Granularity = 1 (4KB) ; Operand = 1 (32 BIT) ; DEFAULT = 0 ; Available = 0 (Default)
+                ; Segment_length = ffff

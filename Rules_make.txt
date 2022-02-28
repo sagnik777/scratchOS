@@ -1,0 +1,102 @@
+Create a toolchain and build environment to build the OS
+
+* Environment preparation -> 
+
+Please update "proj_dir" with appropriate path.
+
+```
+export PREFIX="$[proj_dir]/toolchain"
+export TARGET=i686-elf
+export PATH="$PREFIX/bin:$PATH"
+```
+
+------------------------------------------------------------------------------------------------------------------------
+
+Build toolchain -> 
+Prerequisites -> Install the support libs
+	** bison-3.8.2
+	** flex-master
+	** gmp-6.2.1
+	** mpc-1.2.1
+	** mpfr-4.1.0
+	** texinfo-6.8
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+* BINUTILS ->
+
+```
+mkdir $[proj_dir]/src
+cd $[proj_dir]/src
+curl -O http://ftp.gnu.org/gnu/binutils/binutils-2.38.tar.gz     # If the link 404's, look for a more recent version
+tar xf binutils-2.24.tar.gz
+mkdir build-binutils
+cd build-binutils
+../binutils-2.38/configure --target=$TARGET --prefix="$PREFIX" --with-sysroot --disable-nls --disable-werror
+make
+make install
+```
+
+------------------------------------------------------------------------------------------------------------------------
+
+* GCC ->
+
+```
+cd $[proj_dir]/src
+curl -O https://ftp.gnu.org/gnu/gcc/gcc-4.9.1/gcc-11.2.0.tar.bz2		# If the link 404's, look for a more recent version
+tar xf gcc-4.9.1.tar.bz2
+# The $PREFIX/bin dir _must_ be in the PATH. We did that above.
+which -- $TARGET-as || echo $TARGET-as is not in the PATH
+mkdir build-gcc
+cd build-gcc
+../gcc-x.y.z/configure --target=$TARGET --prefix="$PREFIX" --disable-nls --enable-languages=c,c++ --without-headers
+make all-gcc
+make all-target-libgcc
+make install-gcc
+make install-target-libgcc
+```
+
+------------------------------------------------------------------------------------------------------------------------
+
+* GDB ->
+
+```
+cd /src
+curl -O https://ftp.gnu.org/gnu/gdb/gdb-11.2.tar.gz
+tar xf gdb-7.8.tar.gz
+mkdir gdb-build
+cd gdb-build
+export PREFIX="/usr/local/i386elfgcc"
+export TARGET=i386-elf
+../gdb-7.8/configure --target="$TARGET" --prefix="$PREFIX" --program-prefix=i386-elf-
+make
+make install
+```
+
+------------------------------------------------------------------------------------------------------------------------
+The current project has a Release and Debug builds.
+
+To run release image ->
+make release
+
+To run debug image which has gdb ->
+make debug
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+Important -> 
+* Toolchain may be old. Please check and upgrade.
+* Current toolchain version -> 
+	** binutils-2.38
+	** bison-3.8.2
+	** flex-master
+	** gcc-11.2.0
+	** gdb-11.2
+	** gmp-6.2.1
+	** mpc-1.2.1
+	** mpfr-4.1.0
+	** texinfo-6.8
+* Only zip files are included.
