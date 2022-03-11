@@ -1,6 +1,7 @@
 /*
 * Defines required for the screen device IO
 */
+#include "lowLevel_ioPorts.h"
 
 #define VIDEO_MEMORY 0xb8000
 #define VIDEO_MEM_MAX_ROW 25
